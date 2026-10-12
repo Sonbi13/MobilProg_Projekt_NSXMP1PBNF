@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Állat_Bála
+namespace PetManager
 {
     public static class MauiProgram
     {

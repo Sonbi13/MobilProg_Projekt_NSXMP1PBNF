@@ -1,4 +1,4 @@
-﻿namespace Állat_Bála
+﻿namespace PetManager
 {
     public partial class App : Application
     {

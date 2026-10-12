@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PetManager.ViewModels"
+             xmlns:models="clr-namespace:PetManager.Models"
+             x:Class="PetManager.Views.PetsPage"
+             x:DataType="vm:PetsViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <SearchBar Grid.Row="0" Placeholder="Keresés név vagy fajta alapján"
+                   Text="{Binding SearchText}" />
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+            <CollectionView ItemsSource="{Binding Pets}">
+
+                <CollectionView.EmptyView>
+                    <Label Text="Még nincs kisállat felvéve. Adj hozzá egyet!"
+                           HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="24" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Pet">
+                        <Border Margin="12,6" Padding="10" StrokeShape="RoundRectangle 10">
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PetsViewModel}}, Path=OpenCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+
+                                
+                                <Border Grid.Column="0" WidthRequest="64" HeightRequest="64"
+                                        StrokeShape="RoundRectangle 32" BackgroundColor="#E0E0E0">
+                                    <Grid>
+                                        <Label Text="🐾" FontSize="28"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Image Source="{Binding PhotoPath}" Aspect="AspectFill" />
+                                    </Grid>
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                                    <Label Text="{Binding Subtitle}" />
+                                    <Label Text="{Binding AgeText}" FontSize="12" TextColor="Gray" />
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="2" Text="Szerk." VerticalOptions="Center"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PetsViewModel}}, Path=EditCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Grid.Column="3" Text="Törlés" VerticalOptions="Center"
+                                        BackgroundColor="#C62828"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PetsViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Button Grid.Row="2" Text="+ Új kisállat" Margin="12" Command="{Binding AddCommand}" />
+    </Grid>
+</ContentPage>
