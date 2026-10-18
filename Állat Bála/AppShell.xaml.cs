@@ -1,10 +1,12 @@
-﻿namespace PetManager
+﻿namespace PetManager;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        Routing.RegisterRoute(Routes.Edit, typeof(Views.EditPetPage));
+        Routing.RegisterRoute(Routes.Detail, typeof(Views.PetDetailPage));
     }
 }
