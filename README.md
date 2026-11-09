@@ -1,1 +1,3 @@
-# MobilProg_Projekt_NSXMP1PBNF
+A FuelLog egy .NET MAUI tankolásnapló alkalmazás. A felhasználó rögzíti a tankolásait (dátum, kilométeróra-állás, mennyiség, egységár, teletankolás, benzinkút), amelyeket helyi SQLite adatbázisban tárol, teljes CRUD-dal. Az alkalmazás ezekből kiszámolja a fogyasztást, az átlagfogyasztást, a költséget 100 km-re és a havi költségeket. Három oldala van: tankolások listája, szerkesztő űrlap és statisztika oldal időszak-szűrővel. Eszközfunkciókként geolokációt használ (a benzinkút helyének mentése az aktuális pozícióból, megnyitás a térképen), és a tankolásokat CSV fájlként exportálja és megosztja. A felépítés MVVM, git verziókezeléssel.
+
+Schönberger Dominik - XB55ET
