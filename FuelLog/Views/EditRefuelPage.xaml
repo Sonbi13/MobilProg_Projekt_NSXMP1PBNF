@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FuelLog.ViewModels"
+             x:Class="FuelLog.Views.EditRefuelPage"
+             x:DataType="vm:EditRefuelViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+
+            <Label Text="Dátum" FontAttributes="Bold" />
+            <DatePicker Date="{Binding Date}" />
+
+            <Label Text="Kilométeróra állása (km)" FontAttributes="Bold" />
+            <Entry Keyboard="Numeric" Placeholder="pl. 125430" Text="{Binding OdometerText}" />
+
+            <Label Text="Mennyiség (liter)" FontAttributes="Bold" />
+            <Entry Keyboard="Numeric" Placeholder="pl. 42,5" Text="{Binding LitersText}" />
+
+            <Label Text="Egységár (Ft / liter)" FontAttributes="Bold" />
+            <Entry Keyboard="Numeric" Placeholder="pl. 625" Text="{Binding PriceText}" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Switch IsToggled="{Binding IsFullTank}" />
+                <Label Text="Teletankolás" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label Text="Benzinkút" FontAttributes="Bold" />
+            <Entry Placeholder="pl. MOL, Váci út" Text="{Binding Station}" />
+
+            <Label Text="Helyszín" FontAttributes="Bold" />
+            <Label Text="{Binding CoordinatesText}" />
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Aktuális pozíció" Command="{Binding UseCurrentLocationCommand}" />
+                <Button Text="Törlés" BackgroundColor="Gray" Command="{Binding ClearLocationCommand}" />
+            </HorizontalStackLayout>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="End" Margin="0,12,0,0">
+                <Button Text="Mégse" BackgroundColor="Gray" Command="{Binding CancelCommand}" />
+                <Button Text="Mentés" Command="{Binding SaveCommand}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

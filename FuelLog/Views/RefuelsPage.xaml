@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FuelLog.ViewModels"
+             xmlns:models="clr-namespace:FuelLog.Models"
+             x:Class="FuelLog.Views.RefuelsPage"
+             x:DataType="vm:RefuelsViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Label Grid.Row="0" Text="{Binding SummaryText}" FontAttributes="Bold"
+               Padding="16,12" />
+
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsBusy}" Command="{Binding LoadCommand}">
+            <CollectionView ItemsSource="{Binding Refuels}">
+
+                <CollectionView.EmptyView>
+                    <Label Text="Rögzítsd az első tankolásodat az alsó gombbal!"
+                           HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="24" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Refuel">
+                        <Border Margin="12,6" Padding="12" StrokeShape="RoundRectangle 10">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+
+                                <Label Grid.Row="0" Text="{Binding Title}" FontAttributes="Bold" FontSize="17" />
+                                <Label Grid.Row="1" Text="{Binding Details}" />
+                                <Label Grid.Row="2" Text="{Binding ConsumptionText}" TextColor="#512BD4"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Row="3" Text="{Binding Station}" FontSize="12" TextColor="Gray" />
+
+                                <VerticalStackLayout Grid.Column="1" Grid.RowSpan="4" Spacing="4">
+                                    <Button Text="Szerk." FontSize="12"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RefuelsViewModel}}, Path=EditCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Térkép" FontSize="12" IsVisible="{Binding HasLocation}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RefuelsViewModel}}, Path=OpenMapCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="Törlés" FontSize="12" BackgroundColor="#C62828"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RefuelsViewModel}}, Path=DeleteCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="10" Margin="12">
+            <Button Grid.Column="0" Text="+ Új tankolás" Command="{Binding AddCommand}" />
+            <Button Grid.Column="1" Text="Statisztika" BackgroundColor="Gray" Command="{Binding StatsCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>
